@@ -21,6 +21,8 @@ class NhanVienService {
         const NhanVien = this.extractConactData(payload);
         const result = await this.NhanVien.findOneAndUpdate(
             NhanVien,
+            { $set: {} },
+            { returnDocument: "after", upsert: true }
         );
         return result.value;
     }
@@ -29,9 +31,9 @@ class NhanVienService {
         const cursor = await this.NhanVien.find(filter);
         return await cursor.toArray();
     }
-    async findByPrimaryKey(msnv) {
+    async findByName(hotennv) {
         return await this.find({
-            msnv,
+            hotennv,
         });
     }
 

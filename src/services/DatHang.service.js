@@ -30,9 +30,9 @@ class DatHangService {
         const cursor = await this.DatHang.find(filter);
         return await cursor.toArray();
     }
-    async findByPrimaryKey(sodondh) {
+    async findByMSKH(mskh) {
         return await this.find({
-            sodondh,
+            mskh,
         });
     }
 

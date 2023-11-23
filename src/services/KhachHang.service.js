@@ -13,15 +13,19 @@ class KhachHangService {
             password: payload.password,
             std: payload.std,
         };
-
-
         return khachhang;
     }
     async create(payload) {
+
         const khachhang = this.extractConactData(payload);
+
         const result = await this.KhachHang.findOneAndUpdate(
             khachhang,
+            { $set: {} },
+            { returnDocument: "after", upsert: true }
         );
+
+
         return result.value;
     }
 
@@ -41,24 +45,25 @@ class KhachHangService {
         });
     }
 
-    async update(id, payload) {
-        const filter = {
-            _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
-        };
+    async update(mskh, payload) {
         const update = this.extractConactData(payload);
+        const filter = { mskh: mskh }
         const result = await this.KhachHang.findOneAndUpdate(
             filter,
             { $set: update },
             { returnDocument: "after" }
         );
-        return result.value;
+        console.log(result)
+        return result;
     }
 
-    async delete(id) {
-        const result = await this.KhachHang.findOneAndDelete({
-            _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
-        });
-        return result.value;
+    async delete(mskh) {
+        const filter = { mskh: mskh }
+        const result = await this.KhachHang.findOneAndDelete(
+            filter
+        );
+        console.log(mskh, filter)
+        return result;
     }
 
 

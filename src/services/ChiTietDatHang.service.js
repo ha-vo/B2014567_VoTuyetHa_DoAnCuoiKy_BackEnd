@@ -21,6 +21,8 @@ class ChiTietDatHangService {
         const ChiTietDatHang = this.extractConactData(payload);
         const result = await this.ChiTietDatHang.findOneAndUpdate(
             ChiTietDatHang,
+            { $set: {} },
+            { returnDocument: "after", upsert: true }
         );
         return result.value;
     }
